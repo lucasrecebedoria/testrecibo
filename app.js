@@ -288,13 +288,24 @@ function printThermalReceipt(data) {
   <html><head><meta charset="utf-8">
   <title>Recibo</title>
   <style>
-    @page { size: 80mm 150mm; margin: 6mm; }
-    body { font-family: "Arial Black", "Courier New", Courier, monospace; font-size: 15px; }
-    h1 { text-align: center; font-size: 16px; margin: 8px 0 12px; }
+    @page { size: 80mm 150mm; margin: 4mm; }
+    body { 
+      font-family: "Courier New", Courier, monospace; 
+      font-size: 14px; 
+      margin: 0; 
+      padding: 0;
+    }
+    h1 { 
+      text-align: center; 
+      font-size: 16px; 
+      margin: 8px 0 12px; 
+    }
     .mono { 
-      font-family: "Arial", Courier, monospace; 
+      font-family: "Courier New", Courier, monospace; 
       white-space: pre-wrap; 
-      text-align: left;   /* 🔹 agora alinhado à esquerda */
+      text-align: left;       /* 🔹 força alinhar à esquerda */
+      margin: 0;              /* 🔹 remove margens */
+      padding-left: 0;        /* 🔹 remove padding */
     }
     .sig { 
       margin-top: 20px; 
@@ -305,14 +316,14 @@ function printThermalReceipt(data) {
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
     <div class="mono">
-      Tipo de validador: ${data.tipoValidador}\n
-      PREFIXO: ${data.prefixo}\n
-      QUANTIDADE BORDOS: ${data.qtdBordos}\n
-      VALOR: R$ ${Number(data.valor).toFixed(2)}\n
-      MATRICULA MOTORISTA: ${data.matriculaMotorista}\n
-      MATRICULA RECEBEDOR: ${data.matriculaRecebedor}\n
-      DATA RECEBIMENTO: ${dt}\n
-      ASSINATURA RECEBEDOR:\n
+      <b>Tipo de validador:</b> ${data.tipoValidador}\n
+      <b>PREFIXO:</b> ${data.prefixo}\n
+      <b>QUANTIDADE BORDOS:</b> ${data.qtdBordos}\n
+      <b>VALOR:</b> R$ ${Number(data.valor).toFixed(2)}\n
+      <b>MATRICULA MOTORISTA:</b> ${data.matriculaMotorista}\n
+      <b>MATRICULA RECEBEDOR:</b> ${data.matriculaRecebedor}\n
+      <b>DATA RECEBIMENTO:</b> ${dt}\n
+      <b>ASSINATURA RECEBEDOR:</b>\n
       ________________________________
     </div>
   </body></html>`;
