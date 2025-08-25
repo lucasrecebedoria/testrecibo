@@ -281,7 +281,6 @@ async function renderParcial() {
 }
 
 function printThermalReceipt(data) {
-  // Open new window w/ thermal CSS and auto-print
   const win = window.open('', '_blank', 'width=400,height=800');
   const now = new Date();
   const dt = now.toLocaleString('pt-BR');
@@ -290,12 +289,18 @@ function printThermalReceipt(data) {
   <title>Recibo</title>
   <style>
     @page { size: 80mm 150mm; margin: 6mm; }
-    body { font-family: "Courier New", Courier, monospace; font-size: 15px; }
+    body { font-family: "Arial Black", "Courier New", Courier, monospace; font-size: 15px; }
     h1 { text-align: center; font-size: 16px; margin: 8px 0 12px; }
-    .line { display:flex; justify-content: space-between; margin: 4px 0; }
-    .mono { font-family: arial; white-space: pre-wrap; }
-    .center { text-align: left; }
-    .sig { margin-top: 20px; border-top: 1px solid #000; width: 100%; }
+    .mono { 
+      font-family: "Arial", Courier, monospace; 
+      white-space: pre-wrap; 
+      text-align: left;   /* 🔹 agora alinhado à esquerda */
+    }
+    .sig { 
+      margin-top: 20px; 
+      border-top: 1px solid #000; 
+      width: 100%; 
+    }
   </style></head>
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
@@ -308,12 +313,14 @@ function printThermalReceipt(data) {
       MATRICULA RECEBEDOR: ${data.matriculaRecebedor}\n
       DATA RECEBIMENTO: ${dt}\n
       ASSINATURA RECEBEDOR:\n
-      _____________________________
+      ________________________________
     </div>
   </body></html>`;
+
   win.document.write(html);
   win.document.close();
 }
+
 
 async function gerarRelatorioPDF() {
   const { jsPDF } = window.jspdf;
@@ -327,33 +334,57 @@ async function gerarRelatorioPDF() {
   const sqs = await getDocs(query(sref, orderBy('createdAt','asc')));
 
   let y = 40;
-  docpdf.setFont('helvetica','bold'); docpdf.setFontSize(16);
-  docpdf.text('Relatório de Fechamento de Caixa', 40, y); y += 22;
-  docpdf.setFontSize(11); docpdf.setFont('helvetica','normal');
+  docpdf.setFont('helvetica','bold'); 
+  docpdf.setFontSize(16);
+  docpdf.text('Relatório de Fechamento de Caixa', 40, y); 
+  y += 22;
+
+  docpdf.setFontSize(11); 
+  docpdf.setFont('helvetica','normal');
+
   const hoje = new Date();
-  docpdf.text(`Operador: ${currentUserDoc.nome}  • Matrícula: ${currentUserDoc.matricula}`, 40, y); y+=16;
-  docpdf.text(`Data: ${hoje.toLocaleDateString('pt-BR')} ${hoje.toLocaleTimeString('pt-BR')}`, 40, y); y+=22;
-  docpdf.text('Detalhamento dos lançamentos:', 40, y); y+=16;
+  // Data e hora no formato brasileiro
+  const dataHoraBR = hoje.toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
+  docpdf.text(`Operador: ${currentUserDoc.nome}  • Matrícula: ${currentUserDoc.matricula}`, 40, y); 
+  y += 16;
+  docpdf.text(`Data: ${dataHoraBR}`, 40, y); 
+  y += 22;
+
+  docpdf.text('Detalhamento dos lançamentos:', 40, y); 
+  y += 16;
 
   let total = 0;
   lqs.forEach(d => {
     const x = d.data();
     const line = `${x.dataCaixa} | ${x.prefixo} | ${x.tipoValidador} | Qtd:${x.qtdBordos} | Valor: ${fmtMoney(x.valor)} | Mot:${x.matriculaMotorista}`;
     if (y > 760) { docpdf.addPage(); y = 40; }
-    docpdf.text(line, 40, y); y+=14;
+    docpdf.text(line, 40, y); 
+    y += 14;
     total += Number(x.valor||0);
   });
 
   y += 14;
-  docpdf.text('Sangrias registradas:', 40, y); y+=16;
+  docpdf.text('Sangrias registradas:', 40, y); 
+  y += 16;
   let totalS = 0;
-  if (sqs.empty) { docpdf.text('— Nenhuma', 40, y); y+=14; }
-  else {
+  if (sqs.empty) { 
+    docpdf.text('— Nenhuma', 40, y); 
+    y += 14; 
+  } else {
     sqs.forEach(d => {
       const x = d.data();
       const line = `${fmtMoney(x.valor)} — Motivo: ${x.motivo}`;
       if (y > 760) { docpdf.addPage(); y = 40; }
-      docpdf.text(line, 40, y); y+=14;
+      docpdf.text(line, 40, y); 
+      y += 14;
       totalS += Number(x.valor||0);
     });
   }
@@ -363,9 +394,13 @@ async function gerarRelatorioPDF() {
   docpdf.text(`TOTAL LANÇAMENTOS: ${fmtMoney(total)}`, 40, y); y+=16;
   docpdf.text(`TOTAL SANGRIAS: ${fmtMoney(totalS)}`, 40, y); y+=16;
   docpdf.text(`TOTAL CORRIGIDO: ${fmtMoney(total - totalS)}`, 40, y); y+=22;
+
   docpdf.setFont('helvetica','normal');
   docpdf.text('Fechamento resumido configurado para A4. Documento gerado automaticamente.', 40, y);
 
-  const fileName = `${currentUserDoc.matricula}-${todayISO()}.pdf`;
+  // Nome do arquivo no padrão brasileiro (dd-mm-aaaa)
+  const hojeNome = hoje.toLocaleDateString("pt-BR").replace(/\//g, "-");
+  const fileName = `${currentUserDoc.matricula}-${hojeNome}.pdf`;
+
   docpdf.save(fileName);
 }
