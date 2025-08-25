@@ -291,7 +291,7 @@ function printThermalReceipt(data) {
   <style>
     @page { size: 80mm 150mm; margin: 0mm; }
     body { font-family: "Lucida Sans", Courier, monospace; font-size: 12px; margin: 0; padding: 0; }
-    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -35px; }
+    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -25px; }
     .mono { font-family: "Lucida Sans", monospace; white-space: pre-wrap; }
   </style></head>
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
@@ -320,7 +320,6 @@ function printThermalReceipt(data) {
   win.document.write(html);
   win.document.close();
 }
-
 
 async function gerarRelatorioPDF() {
   const { jsPDF } = window.jspdf;
