@@ -1,10 +1,7 @@
 
-// --- Trecho dentro do fluxo de salvar lançamento ---
-// Exemplo de como deve ficar no btnSalvarLanc:
+// --- Trecho dentro do fluxo de salvar lançamento (btnSalvarLanc) ---
+// Dentro da função já existente onde você chama printThermalReceipt após salvar no Firestore:
 
-await addDoc(lref, dados);
-
-// Disparo do recibo já incluindo dataCaixa:
 printThermalReceipt({
   tipoValidador: dados.tipoValidador,
   prefixo: dados.prefixo,
@@ -16,7 +13,7 @@ printThermalReceipt({
 });
 
 
-// --- Função de impressão térmica ---
+// --- Função de impressão térmica corrigida ---
 
 function printThermalReceipt(data) {
   const win = window.open('', '_blank', 'width=400,height=800');
