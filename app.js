@@ -308,7 +308,7 @@ function printThermalReceipt(data) {
 -------------------------------------------------------------------------
   <strong>Matricula Recebedor:</strong> ${data.matriculaRecebedor}<br>
   <strong>Data Recebimento:</strong> ${dt}<br><br>
-  <strong>ASSINATURA RECEBEDOR:</strong><br>
+  <strong>Assinatura Recebedor:</strong><br>
 
 
          ________________________________
