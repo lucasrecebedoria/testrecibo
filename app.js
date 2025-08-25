@@ -290,9 +290,9 @@ function printThermalReceipt(data) {
   <title>Recibo</title>
   <style>
     @page { size: 80mm 150mm; margin: 0mm; }
-    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 0; }
+    body { font-family: "Lucida Sans", Courier, monospace; font-size: 13px; margin: 0; padding: 0; }
     h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -25px; }
-    .mono { font-family: "Courier New", monospace; white-space: pre-wrap; }
+    .mono { font-family: "Lucida Sans", monospace; white-space: pre-wrap; }
   </style></head>
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
 
