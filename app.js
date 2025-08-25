@@ -281,6 +281,7 @@ async function renderParcial() {
 }
 
 function printThermalReceipt(data) {
+  // Abre nova janela com CSS térmico e auto-print
   const win = window.open('', '_blank', 'width=400,height=800');
   const now = new Date();
   const dt = now.toLocaleString('pt-BR');
@@ -288,31 +289,17 @@ function printThermalReceipt(data) {
   <html><head><meta charset="utf-8">
   <title>Recibo</title>
   <style>
-    @page { size: 80mm auto; margin: 0; } /* 🔹 sem margem da página */
-    body { 
-      font-family: "Courier New", monospace; 
-      font-size: 14px; 
-      margin: 0;      /* 🔹 remove margem */
-      padding: 0;     /* 🔹 remove padding */
-    }
-    h1 { 
-      text-align: center; 
-      font-size: 16px; 
-      margin: 8px 0 12px; 
-    }
+    @page { size: 80mm 150mm; margin: 0mm; }
+    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 0; }
+    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; }
     .mono { 
-      font-family: "Courier New", monospace; 
-      white-space: pre;    /* 🔹 respeita \n mas não cria recuo */
-      text-align: left; 
+      font-family: Arial, monospace; 
+      white-space: pre; 
+      text-align: left;   /* 🔑 Mantém tudo colado à esquerda */
       margin: 0; 
-      padding: 0; 
-      width: 100%;
+      padding: 0;
     }
-    .sig { 
-      margin-top: 20px; 
-      border-top: 1px solid #000; 
-      width: 100%; 
-    }
+    .sig { margin-top: 20px; border-top: 1px solid #000; width: 100%; }
   </style></head>
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
@@ -324,14 +311,15 @@ VALOR: R$ ${Number(data.valor).toFixed(2)}
 MATRICULA MOTORISTA: ${data.matriculaMotorista}
 MATRICULA RECEBEDOR: ${data.matriculaRecebedor}
 DATA RECEBIMENTO: ${dt}
+
 ASSINATURA RECEBEDOR:
 ______________________________
     </div>
   </body></html>`;
-
   win.document.write(html);
   win.document.close();
 }
+
 
 
 async function gerarRelatorioPDF() {
