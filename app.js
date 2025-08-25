@@ -303,6 +303,7 @@ function printThermalReceipt(data) {
   <strong>Tipo de Validador:</strong> ${data.tipoValidador}<br>
   <strong>Prefixo:</strong> ${data.prefixo}<br>
 --------------------------------------------------------------------
+  <strong>Data do Caixa:</strong> ${data.dataCaixa}<br>  
   <strong>Quantidade bordos:</strong> ${data.qtdBordos}<br>
   <strong>Valor:</strong> R$ ${Number(data.valor).toFixed(2)}<br> 
 --------------------------------------------------------------------
