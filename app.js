@@ -281,46 +281,42 @@ async function renderParcial() {
 }
 
 function printThermalReceipt(data) {
-  // Abre nova janela com CSS térmico e auto-print
   const win = window.open('', '_blank', 'width=400,height=800');
   const now = new Date();
   const dt = now.toLocaleString('pt-BR');
+
   const html = `<!DOCTYPE html>
   <html><head><meta charset="utf-8">
   <title>Recibo</title>
   <style>
-    @page { size: 80mm 150mm; margin: 0mm; }
-    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 2; }
-    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -5mm; }
-    .mono { 
-      font-family: Arial, monospace; 
-      white-space: pre; 
-      text-align: left;   /* 🔑 Mantém tudo colado à esquerda */
-      margin: 0; 
-      padding: 0;
-    }
-    .sig { margin-top: 20px; border-top: 1px solid #000; width: 100%; }
+    @page { size: 80mm 150mm; margin: 4mm; }
+    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 0; }
+    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -20px; }
+    .mono { font-family: "Courier New", monospace; white-space: pre-wrap; }
   </style></head>
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
+
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
+------------------------------------------------------------
     <div class="mono">
+  <strong>Matricula Motorista:</strong> ${data.matriculaMotorista}<br>
   <strong>Tipo de Validador:</strong> ${data.tipoValidador}<br>
   <strong>Prefixo:</strong> ${data.prefixo}<br>
+------------------------------------------------------------
   <strong>Quantidade bordos:</strong> ${data.qtdBordos}<br>
   <strong>Valor:</strong> R$ ${Number(data.valor).toFixed(2)}<br>
-  <strong>Matricula Motorista:</strong> ${data.matriculaMotorista}<br>
+------------------------------------------------------------
   <strong>Matricula Recebedor:</strong> ${data.matriculaRecebedor}<br>
   <strong>Data Recebimento:</strong> ${dt}<br><br>
-  <strong>ASSINATURA RECEBEDOR:</strong><br>
-
+  <strong>Assinatura Recebedor:</strong><br><br>
 
 ______________________________
     </div>
   </body></html>`;
+
   win.document.write(html);
   win.document.close();
 }
-
 
 
 async function gerarRelatorioPDF() {
