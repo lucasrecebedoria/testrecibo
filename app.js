@@ -304,15 +304,14 @@ function printThermalReceipt(data) {
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
     <div class="mono">
-Tipo de Validador: ${data.tipoValidador}
-Prefixo: ${data.prefixo}
-Quantidade bordos: ${data.qtdBordos}
-Valor: R$ ${Number(data.valor).toFixed(2)}
-Matricula Motorista: ${data.matriculaMotorista}
-Matricula Recebedor: ${data.matriculaRecebedor}
-Data Recebimento: ${dt}
-
-ASSINATURA RECEBEDOR:
+  <strong>Tipo de Validador:</strong> ${data.tipoValidador}<br>
+  <strong>Prefixo:</strong> ${data.prefixo}<br>
+  <strong>Quantidade bordos:</strong> ${data.qtdBordos}<br>
+  <strong>Valor:</strong> R$ ${Number(data.valor).toFixed(2)}<br>
+  <strong>Matricula Motorista:</strong> ${data.matriculaMotorista}<br>
+  <strong>Matricula Recebedor:</strong> ${data.matriculaRecebedor}<br>
+  <strong>Data Recebimento:</strong> ${dt}<br><br>
+  <strong>ASSINATURA RECEBEDOR:</strong><br>
 
 
 ______________________________
