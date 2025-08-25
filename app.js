@@ -288,12 +288,12 @@ function printThermalReceipt(data) {
   <html><head><meta charset="utf-8">
   <title>Recibo</title>
   <style>
-    @page { size: 80mm 150mm; margin: 4mm; }
+    @page { size: 80mm auto; margin: 0; } /* 🔹 sem margem da página */
     body { 
-      font-family: "Courier New", Courier, monospace; 
+      font-family: "Courier New", monospace; 
       font-size: 14px; 
-      margin: 0; 
-      padding: 0;
+      margin: 0;      /* 🔹 remove margem */
+      padding: 0;     /* 🔹 remove padding */
     }
     h1 { 
       text-align: center; 
@@ -301,11 +301,12 @@ function printThermalReceipt(data) {
       margin: 8px 0 12px; 
     }
     .mono { 
-      font-family: "Courier New", Courier, monospace; 
-      white-space: pre-wrap; 
-      text-align: left;       /* 🔹 força alinhar à esquerda */
-      margin: 0;              /* 🔹 remove margens */
-      padding-left: 0;        /* 🔹 remove padding */
+      font-family: "Courier New", monospace; 
+      white-space: pre;    /* 🔹 respeita \n mas não cria recuo */
+      text-align: left; 
+      margin: 0; 
+      padding: 0; 
+      width: 100%;
     }
     .sig { 
       margin-top: 20px; 
@@ -316,15 +317,15 @@ function printThermalReceipt(data) {
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
     <div class="mono">
-      <b>Tipo de validador:</b> ${data.tipoValidador}\n
-      <b>PREFIXO:</b> ${data.prefixo}\n
-      <b>QUANTIDADE BORDOS:</b> ${data.qtdBordos}\n
-      <b>VALOR:</b> R$ ${Number(data.valor).toFixed(2)}\n
-      <b>MATRICULA MOTORISTA:</b> ${data.matriculaMotorista}\n
-      <b>MATRICULA RECEBEDOR:</b> ${data.matriculaRecebedor}\n
-      <b>DATA RECEBIMENTO:</b> ${dt}\n
-      <b>ASSINATURA RECEBEDOR:</b>\n
-      ________________________________
+Tipo de validador: ${data.tipoValidador}
+PREFIXO: ${data.prefixo}
+QUANTIDADE BORDOS: ${data.qtdBordos}
+VALOR: R$ ${Number(data.valor).toFixed(2)}
+MATRICULA MOTORISTA: ${data.matriculaMotorista}
+MATRICULA RECEBEDOR: ${data.matriculaRecebedor}
+DATA RECEBIMENTO: ${dt}
+ASSINATURA RECEBEDOR:
+______________________________
     </div>
   </body></html>`;
 
