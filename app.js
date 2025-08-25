@@ -290,8 +290,8 @@ function printThermalReceipt(data) {
   <title>Recibo</title>
   <style>
     @page { size: 80mm 150mm; margin: 0mm; }
-    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 0; }
-    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; }
+    body { font-family: "Courier New", Courier, monospace; font-size: 13px; margin: 0; padding: 2; }
+    h1 { text-align: center; font-size: 15px; margin: 8px 0 12px; margin-left: -5mm; }
     .mono { 
       font-family: Arial, monospace; 
       white-space: pre; 
@@ -304,15 +304,17 @@ function printThermalReceipt(data) {
   <body onload="window.print(); setTimeout(()=>window.close(), 500);">
     <h1>RECIBO DE PAGAMENTO MANUAL</h1>
     <div class="mono">
-Tipo de validador: ${data.tipoValidador}
-PREFIXO: ${data.prefixo}
-QUANTIDADE BORDOS: ${data.qtdBordos}
-VALOR: R$ ${Number(data.valor).toFixed(2)}
-MATRICULA MOTORISTA: ${data.matriculaMotorista}
-MATRICULA RECEBEDOR: ${data.matriculaRecebedor}
-DATA RECEBIMENTO: ${dt}
+Tipo de Validador: ${data.tipoValidador}
+Prefixo: ${data.prefixo}
+Quantidade bordos: ${data.qtdBordos}
+Valor: R$ ${Number(data.valor).toFixed(2)}
+Matricula Motorista: ${data.matriculaMotorista}
+Matricula Recebedor: ${data.matriculaRecebedor}
+Data Recebimento: ${dt}
 
 ASSINATURA RECEBEDOR:
+
+
 ______________________________
     </div>
   </body></html>`;
